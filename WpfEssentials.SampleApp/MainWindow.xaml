@@ -1,0 +1,18 @@
+﻿<Window x:Class="WpfEssentials.SampleApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfEssentials.SampleApp"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:MainViewModel}"
+        Title="{Binding Title}" Height="450" Width="800">
+    <StackPanel>
+        <Button Content="Open second window" Command="{Binding OpenSecondWindowCommand}"/>
+        <Button Content="Open dialog window" Command="{Binding OpenDialogWindowCommand}"/>
+        <Button Content="Command with parameter" Command="{Binding CommandWithParameter}" CommandParameter="The Parameter"/>
+        <Button Content="Open a file" Command="{Binding OpenFileCommand}"/>
+        <Button Content="Open a folder browser" Command="{Binding OpenDirectoryCommand}"/>
+        <TextBlock Text="{Binding SomeProperty}"/>
+    </StackPanel>
+</Window>
