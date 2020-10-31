@@ -1,0 +1,14 @@
+packages
+/CastleAPI/bin
+obj
+bin
+*.gitignore
+.vs
+*.user
+*.DotSettings
+CastleAPI.csproj.old
+CastleEdit.csproj.old
+CastleEscape.csproj.old
+CastleServer.csproj.old
+CastleEdit.Test.csproj
+packages.config
