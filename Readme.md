@@ -5,6 +5,7 @@ WpfEssentials provides basic functions to create a WPF MVVM application. It feat
 - RelayCommand and AsyncRelayCommand classes with an optional generic parameter
 - View models that can be used for dialogs and models/entities
 - A view manager that handles WPF-specific tasks like opening a window with a corresponding view model
+- A helper class to create Dependency Properties with less code
 
 The main purpose of this small framework is to help you getting started with your mvvm application without 
 much overhead of bigger frameworks. Simple register your windows and view models and you are basically ready to go!
@@ -75,4 +76,34 @@ void CommandWithParameterExecute(string Parameter)
 }
 ```
 
+Creating Dependency Properties
+---
+There is a *DependencyPropertyRegistrator* class that lets you create Dependency Properties more easily with writing less code.
+
+So far, only standard Dependency Properties are supported.
+
+```
+public class MyTestControl : Control
+{
+    public static readonly DependencyProperty SomeNumberProperty;
+
+    public int SomeNumber
+    {
+        get => (int)GetValue(SomeNumberProperty);
+        set => SetValue(SomeNumberProperty, value);
+    }
+
+    static MyTestControl()
+    {
+        DependencyPropertyRegistrator<MyTestControl>.Create()
+            .OverrideDefaultStyle() // override the default style to use your own
+            .Register(x => x.SomeNumber, out SomeNumberProperty, 16, OnSomeNumberChanged);
+    }
+
+    static void OnSomeNumberChanged(MyTestControl Sender, int OldValue, int NewValue)
+    {
+        // Some logic when the property has changed
+    }
+}
+```
 Please refer to the sample project for further details.

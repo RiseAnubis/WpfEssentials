@@ -1,9 +1,21 @@
-<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
+    <Authors>Andy Stahl</Authors>
+    <Description>WpfEssentials provides basic functions to create a WPF MVVM application. It features the following:
+
+- RelayCommand and AsyncRelayCommand classes with an optional generic parameter
+- View models that can be used for dialogs and models/entities
+- A view manager that handles WPF-specific tasks like opening a window with a corresponding view model</Description>
+    <PackageProjectUrl>https://github.com/RiseAnubis/WpfEssentials</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/RiseAnubis/WpfEssentials</RepositoryUrl>
+    <PackageTags>wpf mvvm</PackageTags>
+    <PackageId>WpfBasic.WpfEssentials</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
 </Project>
