@@ -46,8 +46,8 @@ namespace WpfEssentials
                 throw new InvalidOperationException("The created object is not a ViewModel");
 
             openWindows.Add(window);
-            ViewModelInitializer?.Invoke(viewModel);
             viewModel.ApplicationService = this;
+            ViewModelInitializer?.Invoke(viewModel);
             window.DataContext = viewModel;
 
             window.Closed += (sender, e) => RemoveWindowAndCloseApp(window);
