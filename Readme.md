@@ -14,7 +14,7 @@ Getting started
 ===
 First of all, you have to register all of your windows with their corresponding view models:
 1. Remove the *StartupUri*-property from your app.xaml
-2. In the app.xaml.cs, override *OnStartup* and register your views with the *ApplicationService* and open your MainWindow:
+2. In app.xaml.cs, override *OnStartup* and register your views with the *ApplicationService* and open your MainWindow:
 ```
 protected override void OnStartup(StartupEventArgs e)
 {
@@ -23,9 +23,8 @@ protected override void OnStartup(StartupEventArgs e)
     service
         .Register<MainViewModel, MainWindow>()
         .Register<SecondWindowViewModel, SecondWindow>()
-        .Register<TestDialogViewModel, TestDialog>();
-
-    service.OpenWindow<MainViewModel>();
+        .Register<TestDialogViewModel, TestDialog>()
+        .OpenWindow<MainViewModel>();
 
     base.OnStartup(e);
 }
@@ -37,10 +36,20 @@ Examples
 Opening views
 ---
 You can use the *ApplicationService* to open views (modal and non-modal) and initialize them.
-
-Important: View models with contructor arguments are not (yet) supported.
+Use an action to initialize some logic after the ViewModel has been created by the service:
 ```
 var vm = ApplicationService.OpenWindow<TestDialogViewModel>(vm => vm.Initialize(SomeProperty), true);
+```
+
+Or use a function to create your ViewModel instance by yourself:
+```
+public ParameterViewModel(string Text, int Value)
+{
+    this.Text = Text;
+    this.Value = Value;
+}
+...
+var vm = ApplicationService.OpenWindow(() => new ParameterViewModel("Initial text", 11));
 ```
 
 Closing a view within a view model:
@@ -57,7 +66,7 @@ public string SomeProperty
     set => SetProperty(value);
 }
 ```
-You don't have to use backing fields! All of the properties make a call to the *PropertyChanged* event automatically.
+You don't have to use backing fields! All of the properties make a call to the *PropertyChanged* event internally.
 
 Defining commands
 ---
@@ -80,7 +89,7 @@ Creating Dependency Properties
 ---
 There is a *DependencyPropertyRegistrator* class that lets you create Dependency Properties more easily with writing less code.
 
-So far, only standard Dependency Properties are supported.
+So far, only normal Dependency Properties are supported.
 
 ```
 public class MyTestControl : Control

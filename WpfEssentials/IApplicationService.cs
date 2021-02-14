@@ -32,12 +32,20 @@ namespace WpfEssentials
         Dispatcher CurrentDispatcher { get; }
 
         /// <summary>
-        /// Opens a window with specified viewmodel logic
+        /// Opens a window with the specified viewmodel logic to execute further logic of the ViewModel
         /// </summary>
-        /// <param name="ViewModelInitializer">The function to initialize the viewmodel</param>
+        /// <param name="ViewModelInitializer">The action to initialize the viewmodel after it has been created</param>
         /// <param name="IsDialog">Sets whether the window should be opened as dialog</param>
         /// <param name="AfterLoadedAction">The action that should be invoked after the window has been rendered</param>
         TViewModel OpenWindow<TViewModel>(Action<TViewModel> ViewModelInitializer = null, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel;
+
+        /// <summary>
+        /// Opens a window with the specified viewmodel
+        /// </summary>
+        /// <param name="ViewModelCreator">The function that creates the ViewModel for the window</param>
+        /// <param name="IsDialog">Sets whether the window should be opened as dialog</param>
+        /// <param name="AfterLoadedAction">The action that should be invoked after the window has been rendered</param>
+        TViewModel OpenWindow<TViewModel>(Func<TViewModel> ViewModelCreator, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel;
 
         /// <summary>
         /// Closes the window with the specified viewmodel

@@ -2,6 +2,8 @@
 {
     public class MainViewModel : BaseDialogViewModel
     { 
+        public RelayCommand OpenParameterWindowCommand { get; }
+        
         public RelayCommand OpenSecondWindowCommand { get; }
         
         public RelayCommand OpenDialogWindowCommand { get; }
@@ -22,12 +24,18 @@
 
         public MainViewModel()
         {
+            OpenParameterWindowCommand = new RelayCommand(OpenParameterWindowExecute);
             OpenSecondWindowCommand = new RelayCommand(OpenSecondWindowExecute);
             OpenDialogWindowCommand = new RelayCommand(OpenDialogWindowExecute);
             OpenFileCommand = new RelayCommand(OpenFileExecute);
             OpenDirectoryCommand = new RelayCommand(OpenDirectoryExecute);
             CommandWithParameter = new RelayCommand<string>(CommandWithParameterExecute);
             SomeProperty = "Initial value";
+        }
+
+        void OpenParameterWindowExecute()
+        {
+            ApplicationService.OpenWindow(() => new ParameterViewModel("Initial text", 11));
         }
 
         void OpenDirectoryExecute()
@@ -44,7 +52,7 @@
 
         void CommandWithParameterExecute(string Parameter)
         {
-            ApplicationService.ShowMessage(DialogType.Information, "Parameter", Parameter.ToString());
+            ApplicationService.ShowMessage(DialogType.Information, "Parameter", Parameter);
         }
 
         void OpenDialogWindowExecute()

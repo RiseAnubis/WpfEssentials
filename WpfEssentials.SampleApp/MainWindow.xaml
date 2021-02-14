@@ -8,6 +8,7 @@
         d:DataContext="{d:DesignInstance local:MainViewModel}"
         Title="{Binding Title}" Height="450" Width="800">
     <StackPanel>
+        <Button Content="Open window with constructor parameters" Command="{Binding OpenParameterWindowCommand}"/>
         <Button Content="Open second window" Command="{Binding OpenSecondWindowCommand}"/>
         <Button Content="Open dialog window" Command="{Binding OpenDialogWindowCommand}"/>
         <Button Content="Command with parameter" Command="{Binding CommandWithParameter}" CommandParameter="The Parameter"/>

@@ -14,9 +14,9 @@ namespace WpfEssentials.SampleApp
             service
                 .Register<MainViewModel, MainWindow>()
                 .Register<SecondWindowViewModel, SecondWindow>()
-                .Register<TestDialogViewModel, TestDialog>();
-
-            service.OpenWindow<MainViewModel>();
+                .Register<TestDialogViewModel, TestDialog>()
+                .Register<ParameterViewModel, ParameterWindow>()
+                .OpenWindow<MainViewModel>();
 
             base.OnStartup(e);
         }

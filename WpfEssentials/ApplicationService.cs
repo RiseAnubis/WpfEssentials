@@ -9,8 +9,8 @@ namespace WpfEssentials
 {
     public class ApplicationService : IApplicationService
     {
-        readonly Dictionary<Type, Type> windowCollection = new Dictionary<Type, Type>();
-        readonly List<Window> openWindows = new List<Window>();
+        readonly Dictionary<Type, Type> windowCollection = new ();
+        readonly List<Window> openWindows = new ();
 
         public string Filter { get; set; }
 
@@ -38,11 +38,11 @@ namespace WpfEssentials
 
         public TViewModel OpenWindow<TViewModel>(Action<TViewModel> ViewModelInitializer = null, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
         {
-            var pair = windowCollection.First(x => typeof(TViewModel) == x.Key);
+            var (key, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
 
-            if (!(Activator.CreateInstance(pair.Value) is Window window))
+            if (Activator.CreateInstance(value) is not Window window)
                 throw new InvalidOperationException("The created object is not a Window");
-            if (!(Activator.CreateInstance(pair.Key) is TViewModel viewModel))
+            if (Activator.CreateInstance(key) is not TViewModel viewModel)
                 throw new InvalidOperationException("The created object is not a ViewModel");
 
             openWindows.Add(window);
@@ -50,10 +50,37 @@ namespace WpfEssentials
             ViewModelInitializer?.Invoke(viewModel);
             window.DataContext = viewModel;
 
-            window.Closed += (sender, e) => RemoveWindowAndCloseApp(window);
+            window.Closed += (_, _) => RemoveWindowAndCloseApp(window);
 
             if (AfterLoadedAction != null)
-                window.ContentRendered += (sender, e) => AfterLoadedAction(viewModel);
+                window.ContentRendered += (_, _) => AfterLoadedAction(viewModel);
+
+            if (window != Application.Current.MainWindow)
+                window.Owner = Application.Current.MainWindow;
+
+            if (IsDialog)
+                window.ShowDialog();
+            else
+                window.Show();
+
+            return viewModel;
+        }
+
+        public TViewModel OpenWindow<TViewModel>(Func<TViewModel> ViewModelCreator, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
+        {
+            var (_, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
+
+            if (Activator.CreateInstance(value) is not Window window)
+                throw new InvalidOperationException("The created object is not a Window");
+
+            var viewModel = ViewModelCreator();
+            openWindows.Add(window);
+            viewModel.ApplicationService = this;
+            window.DataContext = viewModel;
+            window.Closed += (_, _) => RemoveWindowAndCloseApp(window);
+
+            if (AfterLoadedAction != null)
+                window.ContentRendered += (_, _) => AfterLoadedAction(viewModel);
 
             if (window != Application.Current.MainWindow)
                 window.Owner = Application.Current.MainWindow;
@@ -128,7 +155,7 @@ namespace WpfEssentials
         public bool ShowSaveFileDialog()
         {
             var sfd = new SaveFileDialog { Filter = Filter };
-            bool result = sfd.ShowDialog(Application.Current.MainWindow).Value;
+            var result = sfd.ShowDialog(Application.Current.MainWindow).Value;
             FileName = sfd.FileName;
             SafeFileName = sfd.SafeFileName;
 
@@ -138,7 +165,7 @@ namespace WpfEssentials
         public bool ShowOpenFileDialog()
         {
             var ofd = new OpenFileDialog { Filter = Filter };
-            bool result = ofd.ShowDialog(Application.Current.MainWindow).Value;
+            var result = ofd.ShowDialog(Application.Current.MainWindow).Value;
             FileName = ofd.FileName;
             SafeFileName = ofd.SafeFileName;
 

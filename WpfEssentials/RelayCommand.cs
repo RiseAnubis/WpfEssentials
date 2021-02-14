@@ -65,7 +65,7 @@ namespace WpfEssentials
         /// <param name="CanExecute">The method that checks whether the command can be executed</param>
         public RelayCommand(Action<T> Execute, Predicate<T> CanExecute = null)
         {
-            executeHandler = Execute ?? throw new ArgumentException(nameof(Execute));
+            executeHandler = Execute ?? throw new ArgumentException(null, nameof(Execute));
             canExecuteHandler = CanExecute;
         }
 
@@ -143,7 +143,7 @@ namespace WpfEssentials
         /// <param name="CanExecute">The method that checks whether the command can be executed</param>
         public AsyncRelayCommand(Func<T, Task> Execute, Func<T, bool> CanExecute = null)
         {
-            executeHandler = Execute ?? throw new ArgumentException(nameof(Execute));
+            executeHandler = Execute ?? throw new ArgumentException(null, nameof(Execute));
             canExecuteHandler = CanExecute;
         }
 
