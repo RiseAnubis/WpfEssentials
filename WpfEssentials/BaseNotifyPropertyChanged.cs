@@ -10,7 +10,7 @@ namespace WpfEssentials
     /// </summary>
     public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     {
-        readonly Dictionary<string, object> backingFields = new Dictionary<string, object>();
+        readonly Dictionary<string, object> backingFields = new ();
 
         /// <summary>
         /// The PropertyChanged event that is invoked every time a property has changed
@@ -46,7 +46,7 @@ namespace WpfEssentials
             if (!backingFields.TryGetValue(Property, out var backingField) || ForcePropertyChanged || !Equals(backingField, Value))
             {
                 backingFields[Property] = Value;
-                OnPropertyChanged(Property);
+                OnPropertyChanged(Property, backingField, Value);
             }
         }
 
@@ -63,14 +63,17 @@ namespace WpfEssentials
             if (!ForcePropertyChanged && Equals(Storage, Value))
                 return;
 
+            var oldValue = Storage;
             Storage = Value;
-            OnPropertyChanged(Property);
+            OnPropertyChanged(Property, oldValue, Value);
         }
 
         /// <summary>
         /// Invokes the PropertyChanged event
         /// </summary>
         /// <param name="Property">The name of the property that has changed</param>
-        protected void OnPropertyChanged(string Property) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(Property));
+        /// <param name="OldValue">The old value of the property</param>
+        /// <param name="NewValue">The new value of the property</param>
+        protected void OnPropertyChanged(string Property, object OldValue, object NewValue) => PropertyChanged?.Invoke(this, new PropertyChangedExtendedEventArgs(Property, OldValue, NewValue));
     }
 }
