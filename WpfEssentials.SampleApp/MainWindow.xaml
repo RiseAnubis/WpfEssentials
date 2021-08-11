@@ -13,7 +13,8 @@
         <Button Content="Open dialog window" Command="{Binding OpenDialogWindowCommand}"/>
         <Button Content="Command with parameter" Command="{Binding CommandWithParameter}" CommandParameter="The Parameter"/>
         <Button Content="Open a file" Command="{Binding OpenFileCommand}"/>
-        <Button Content="Open a folder browser" Command="{Binding OpenDirectoryCommand}"/>
+        <Button Content="Open a folder browser" Command="{Binding OpenDirectoryCommand}" local:AttachedProperties.AttachedTooltip="Tooltip for attached property"/>
+        <local:MyTestControl x:Name="testControl"/>
         <TextBlock Text="{Binding SomeProperty}"/>
     </StackPanel>
 </Window>
