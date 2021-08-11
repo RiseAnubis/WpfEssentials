@@ -72,6 +72,20 @@ namespace WpfEssentials
         /// <param name="Property">The wrapper property that reads and writes the dependency property</param>
         /// <param name="DependencyProperty">The actual dependency property</param>
         /// <param name="DefaultValue">The default value for the property</param>
+        /// <param name="Flags">The flags that describe the property behavior</param>
+        /// <param name="PropertyChangedCallback">The method that should be executed when the value of the property has changed</param>
+        public DependencyPropertyRegistrator<T> Register<TProperty>(Expression<Func<T, TProperty>> Property, out DependencyProperty DependencyProperty, TProperty DefaultValue, FrameworkPropertyMetadataOptions Flags, Action<T, TProperty, TProperty> PropertyChangedCallback)
+        {
+            return Register(Property, out DependencyProperty, DefaultValue, Flags, PropertyChangedCallback, null);
+        }
+
+        /// <summary>
+        /// Registers a Dependeny Property for the application
+        /// </summary>
+        /// <typeparam name="TProperty">The datatype of the property</typeparam>
+        /// <param name="Property">The wrapper property that reads and writes the dependency property</param>
+        /// <param name="DependencyProperty">The actual dependency property</param>
+        /// <param name="DefaultValue">The default value for the property</param>
         /// <param name="PropertyChangedCallback">The method that should be executed when the value of the property has changed</param>
         public DependencyPropertyRegistrator<T> Register<TProperty>(Expression<Func<T, TProperty>> Property, out DependencyProperty DependencyProperty, TProperty DefaultValue, Action<T, TProperty, TProperty> PropertyChangedCallback)
         {
@@ -226,9 +240,10 @@ namespace WpfEssentials
         /// Adds another owner for a Dependency Property
         /// </summary>
         /// <param name="DependencyProperty">The property to add another owner for</param>
-        public DependencyPropertyRegistrator<T> AddOwner(DependencyProperty DependencyProperty)
+        /// <param name="OwnerProperty">The new owner property</param>
+        public DependencyPropertyRegistrator<T> AddOwner(out DependencyProperty DependencyProperty, DependencyProperty OwnerProperty)
         {
-            DependencyProperty.AddOwner(typeof(T));
+            DependencyProperty = OwnerProperty.AddOwner(typeof(T));
             return this;
         }
 
@@ -237,12 +252,13 @@ namespace WpfEssentials
         /// </summary>
         /// <typeparam name="TProperty">The datatype of the property</typeparam>
         /// <param name="DependencyProperty">The property to add another owner for</param>
+        /// <param name="OwnerProperty">The new owner property</param>
         /// <param name="DefaultValue">The default value for the property</param>
         /// <param name="Flags">The flags that describe the property behavior</param>
         /// <param name="PropertyChangedCallback">The method that should be executed when the value of the property has changed</param>
-        public DependencyPropertyRegistrator<T> AddOwner<TProperty>(DependencyProperty DependencyProperty, TProperty DefaultValue, FrameworkPropertyMetadataOptions Flags, Action<T, TProperty, TProperty> PropertyChangedCallback)
+        public DependencyPropertyRegistrator<T> AddOwner<TProperty>(out DependencyProperty DependencyProperty, DependencyProperty OwnerProperty, TProperty DefaultValue, FrameworkPropertyMetadataOptions Flags, Action<T, TProperty, TProperty> PropertyChangedCallback)
         {
-            DependencyProperty.AddOwner(typeof(T), new FrameworkPropertyMetadata(DefaultValue, Flags, ToPropertyChangedCallback(PropertyChangedCallback)));
+            DependencyProperty = OwnerProperty.AddOwner(typeof(T), new FrameworkPropertyMetadata(DefaultValue, Flags, ToPropertyChangedCallback(PropertyChangedCallback)));
             return this;
         }
 
@@ -250,10 +266,10 @@ namespace WpfEssentials
         /// Adds another owner for an Routed Event
         /// </summary>
         /// <param name="RoutedEvent">The event to add another owner for</param>
-        /// <returns></returns>
-        public DependencyPropertyRegistrator<T> AddOwner(RoutedEvent RoutedEvent)
+        /// <param name="OwnerEvent">The new owner</param>
+        public DependencyPropertyRegistrator<T> AddOwner(out RoutedEvent RoutedEvent, RoutedEvent OwnerEvent)
         {
-            RoutedEvent.AddOwner(typeof(T));
+            RoutedEvent = OwnerEvent.AddOwner(typeof(T));
             return this;
         }
 
