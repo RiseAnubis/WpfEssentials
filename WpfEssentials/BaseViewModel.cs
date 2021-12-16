@@ -1,9 +1,8 @@
-﻿namespace WpfEssentials
+﻿namespace WpfEssentials;
+
+/// <summary>
+/// Base class for all Viewmodels
+/// </summary>
+public abstract class BaseViewModel : BaseNotifyPropertyChanged
 {
-    /// <summary>
-    /// Base class for all Viewmodels
-    /// </summary>
-    public abstract class BaseViewModel : BaseNotifyPropertyChanged
-    {
-    }
 }
