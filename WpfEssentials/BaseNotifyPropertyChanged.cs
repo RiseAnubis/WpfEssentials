@@ -38,8 +38,7 @@ public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     /// <param name="Property">The name of the property. Leave it empty to get the name automatically</param>
     protected void SetProperty<T>(T Value, bool ForcePropertyChanged = false, [CallerMemberName] string Property = null)
     {
-        if (Property == null)
-            throw new ArgumentNullException(nameof(Property));
+        ArgumentNullException.ThrowIfNull(Property);
 
         if (!backingFields.TryGetValue(Property, out var backingField) || ForcePropertyChanged || !Equals(backingField, Value))
         {

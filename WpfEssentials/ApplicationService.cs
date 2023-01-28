@@ -1,18 +1,24 @@
 ﻿namespace WpfEssentials;
 
+/// <inheritdoc />
 public class ApplicationService : IApplicationService
 {
     readonly Dictionary<Type, Type> windowCollection = new ();
     readonly List<Window> openWindows = new ();
 
+    /// <inheritdoc />
     public string Filter { get; set; }
 
+    /// <inheritdoc />
     public string FileName { get; private set; }
 
+    /// <inheritdoc />
     public string SafeFileName { get; private set; }
-        
+
+    /// <inheritdoc />
     public string FolderPath { get; private set; }
 
+    /// <inheritdoc />
     public Dispatcher CurrentDispatcher => Application.Current.Dispatcher;
 
     /// <summary>
@@ -29,6 +35,7 @@ public class ApplicationService : IApplicationService
         return this;
     }
 
+    /// <inheritdoc />
     public TViewModel OpenWindow<TViewModel>(Action<TViewModel> ViewModelInitializer = null, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
     {
         var (key, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
@@ -59,6 +66,7 @@ public class ApplicationService : IApplicationService
         return viewModel;
     }
 
+    /// <inheritdoc />
     public TViewModel OpenWindow<TViewModel>(Func<TViewModel> ViewModelCreator, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
     {
         var (_, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
@@ -86,6 +94,7 @@ public class ApplicationService : IApplicationService
         return viewModel;
     }
 
+    /// <inheritdoc />
     public void CloseWindow(BaseViewModel ViewModel)
     {
         var pair = windowCollection.First(x => ViewModel.GetType() == x.Key);
@@ -93,6 +102,7 @@ public class ApplicationService : IApplicationService
         openWindow?.Close();
     }
 
+    /// <inheritdoc />
     public void HideWindow(BaseViewModel ViewModel)
     {
         var pair = windowCollection.First(x => ViewModel.GetType() == x.Key);
@@ -100,6 +110,7 @@ public class ApplicationService : IApplicationService
         openWindow?.Hide();
     }
 
+    /// <inheritdoc />
     public void ExitApplication()
     {
         var windows = openWindows.OrderBy(x => x == Application.Current.MainWindow);
@@ -114,11 +125,13 @@ public class ApplicationService : IApplicationService
             throw new InvalidOperationException("Not all windows have been closed!");
     }
 
+    /// <inheritdoc />
     public void SetMainWindow(BaseViewModel ViewModel)
     {
         Application.Current.MainWindow = GetWindow(ViewModel);
     }
 
+    /// <inheritdoc />
     public MessageBoxResult ShowMessage(DialogType Type, string Caption, string Message)
     {
         var buttons = MessageBoxButton.OK;
@@ -145,6 +158,7 @@ public class ApplicationService : IApplicationService
         return MessageBox.Show(Application.Current.MainWindow, Message, Caption, buttons, icon);
     }
 
+    /// <inheritdoc />
     public bool ShowSaveFileDialog()
     {
         var sfd = new SaveFileDialog { Filter = Filter };
@@ -155,6 +169,7 @@ public class ApplicationService : IApplicationService
         return result;
     }
 
+    /// <inheritdoc />
     public bool ShowOpenFileDialog()
     {
         var ofd = new OpenFileDialog { Filter = Filter };
@@ -165,6 +180,7 @@ public class ApplicationService : IApplicationService
         return result;
     }
 
+    /// <inheritdoc />
     public System.Windows.Forms.DialogResult ShowFolderBrowserDialog(string Description)
     {
         var fbd = new System.Windows.Forms.FolderBrowserDialog
@@ -180,6 +196,7 @@ public class ApplicationService : IApplicationService
         return result;
     }
 
+    /// <inheritdoc />
     public T FindResource<T>(string Name)
     {
         return (T)Application.Current.Resources[Name];
