@@ -23,8 +23,7 @@ public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     /// <returns>Returns the value of the property (default if null)</returns>
     protected T GetProperty<T>([CallerMemberName] string Property = null)
     {
-        if (Property == null)
-            throw new ArgumentNullException(nameof(Property));
+        ArgumentException.ThrowIfNullOrEmpty(Property);
 
         return backingFields.TryGetValue(Property, out var value) ? (T)value : default;
     }
@@ -38,7 +37,7 @@ public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     /// <param name="Property">The name of the property. Leave it empty to get the name automatically</param>
     protected void SetProperty<T>(T Value, bool ForcePropertyChanged = false, [CallerMemberName] string Property = null)
     {
-        ArgumentNullException.ThrowIfNull(Property);
+        ArgumentException.ThrowIfNullOrEmpty(Property);
 
         if (!backingFields.TryGetValue(Property, out var backingField) || ForcePropertyChanged || !Equals(backingField, Value))
         {
@@ -71,5 +70,5 @@ public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     /// <param name="Property">The name of the property that has changed</param>
     /// <param name="OldValue">The old value of the property</param>
     /// <param name="NewValue">The new value of the property</param>
-    protected void OnPropertyChanged(string Property, object OldValue, object NewValue) => PropertyChanged?.Invoke(this, new PropertyChangedExtendedEventArgs(Property, OldValue, NewValue));
+    protected virtual void OnPropertyChanged(string Property, object OldValue, object NewValue) => PropertyChanged?.Invoke(this, new PropertyChangedExtendedEventArgs(Property, OldValue, NewValue));
 }

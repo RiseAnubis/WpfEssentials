@@ -1,4 +1,6 @@
-﻿namespace WpfEssentials.SampleApp;
+﻿using System.ComponentModel;
+
+namespace WpfEssentials.SampleApp;
 
 public class MainViewModel : BaseDialogViewModel
 { 
@@ -17,6 +19,24 @@ public class MainViewModel : BaseDialogViewModel
     public string SomeProperty
     {
         get => GetProperty<string>();
+        set => SetProperty(value);
+    }
+
+    public string SomeText
+    {
+        get => GetProperty<string>();
+        set => SetProperty(value);
+    }
+
+    public string SomeInformation
+    {
+        get => GetProperty<string>();
+        set => SetProperty(value);
+    }
+
+    public SomeEnum EnumValue
+    {
+        get => GetProperty<SomeEnum>();
         set => SetProperty(value);
     }
 
@@ -70,4 +90,23 @@ public class MainViewModel : BaseDialogViewModel
     {
         ApplicationService.OpenWindow<SecondWindowViewModel>();
     }
+
+    protected override void OnPropertyChanged(string Property, object OldValue, object NewValue)
+    {
+        base.OnPropertyChanged(Property, OldValue, NewValue);
+
+        if (Property == nameof(SomeText))
+            SomeInformation = "Property changed";
+    }
+}
+
+public enum SomeEnum
+{
+    [Description("Value 1")]
+    Val1,
+
+    [Description("Another Value")]
+    Val2,
+
+    Val3,
 }

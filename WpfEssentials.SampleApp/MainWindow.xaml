@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfEssentials.SampleApp"
+        xmlns:wpfEssentials="clr-namespace:WpfEssentials;assembly=WpfEssentials"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainViewModel}"
         Title="{Binding Title}" Height="450" Width="800">
@@ -16,5 +17,14 @@
         <Button Content="Open a folder browser" Command="{Binding OpenDirectoryCommand}" local:AttachedProperties.AttachedTooltip="Tooltip for attached property"/>
         <local:MyTestControl x:Name="testControl"/>
         <TextBlock Text="{Binding SomeProperty}"/>
+        <TextBox Text="{Binding SomeText}"/>
+        <TextBlock Text="{Binding SomeInformation}"/>
+        <ComboBox ItemsSource="{wpfEssentials:EnumValues local:SomeEnum}" SelectedItem="{Binding EnumValue}">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
     </StackPanel>
 </Window>

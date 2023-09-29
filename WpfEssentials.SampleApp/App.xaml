@@ -1,8 +1,11 @@
 ﻿<Application x:Class="WpfEssentials.SampleApp.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:sampleApp="clr-namespace:WpfEssentials.SampleApp">
+             xmlns:sampleApp="clr-namespace:WpfEssentials.SampleApp"
+             xmlns:wpfEssentials="clr-namespace:WpfEssentials;assembly=WpfEssentials">
     <Application.Resources>
+        <wpfEssentials:EnumDescriptionConverter x:Key="EnumDescriptionConverter" />
+
         <Style TargetType="sampleApp:MyTestControl">
             <Setter Property="Template">
                 <Setter.Value>
