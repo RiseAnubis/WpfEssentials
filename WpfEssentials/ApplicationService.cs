@@ -181,17 +181,15 @@ public class ApplicationService : IApplicationService
     }
 
     /// <inheritdoc />
-    public System.Windows.Forms.DialogResult ShowFolderBrowserDialog(string Description)
+    public bool ShowFolderBrowserDialog(string Description)
     {
-        var fbd = new System.Windows.Forms.FolderBrowserDialog
+        var ofd = new OpenFolderDialog()
         {
-            Description = Description,
-            UseDescriptionForTitle = true,
-            ShowNewFolderButton = true
+            Title = Description,
         };
 
-        var result = fbd.ShowDialog();
-        FolderPath = fbd.SelectedPath;
+        var result = ofd.ShowDialog(Application.Current.MainWindow).Value;
+        FolderPath = ofd.FolderName;
 
         return result;
     }

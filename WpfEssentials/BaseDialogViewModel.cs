@@ -30,18 +30,27 @@ public abstract class BaseDialogViewModel : BaseViewModel
     /// </summary>
     public IApplicationService ApplicationService { get; set; }
 
+    /// <summary>
+    /// Creates a new instance of the BaseDialogViewModel
+    /// </summary>
     protected BaseDialogViewModel()
     {
         ConfirmDialogCommand = new RelayCommand(ConfirmDialogExecute);
         CancelDialogCommand = new RelayCommand(CancelDialogExecute);
     }
 
+    /// <summary>
+    /// Cancels a modal dialog
+    /// </summary>
     protected virtual void CancelDialogExecute()
     {
         DialogResult = false;
         ApplicationService.CloseWindow(this);
     }
 
+    /// <summary>
+    /// Confirms a modal dialog
+    /// </summary>
     protected virtual void ConfirmDialogExecute()
     {
         DialogResult = true;

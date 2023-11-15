@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 using System.Windows.Markup;
 
-namespace WpfEssentials;
+namespace WpfEssentials.Extensions;
 
 public static class EnumExtensions
 {
@@ -15,6 +15,10 @@ public static class EnumExtensions
     public static string GetEnumDescription(this Enum EnumObj)
     {
         var fieldInfo = EnumObj.GetType().GetField(EnumObj.ToString());
+
+        if (fieldInfo == null)
+            return EnumObj.ToString();
+
         var attribArray = fieldInfo.GetCustomAttributes(false);
 
         if (!attribArray.Any())
@@ -22,25 +26,18 @@ public static class EnumExtensions
 
         var attr = attribArray.First() as DescriptionAttribute;
 
-        return attr.Description;
+        return attr?.Description ?? EnumObj.ToString();
     }
 }
 
 /// <summary>
 /// MarkupExtension to provide the values of an enum to use them as an ItemsSource
 /// </summary>
-public class EnumValuesExtension : MarkupExtension
+public class EnumValuesExtension(Type EnumType) : MarkupExtension
 {
-    readonly Type enumType;
-
-    public EnumValuesExtension(Type EnumType)
-    {
-        enumType = EnumType;
-    }
-
     public override object ProvideValue(IServiceProvider serviceProvider)
     {
-        return Enum.GetValues(enumType);
+        return Enum.GetValues(EnumType);
     }
 }
 

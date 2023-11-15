@@ -92,7 +92,7 @@ public interface IApplicationService
     /// </summary>
     /// <param name="Description">The description of the dialog shown in the title</param>
     /// <returns></returns>
-    System.Windows.Forms.DialogResult ShowFolderBrowserDialog(string Description);
+    bool ShowFolderBrowserDialog(string Description);
 
     /// <summary>
     /// Searches for an application resource

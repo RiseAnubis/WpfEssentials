@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfEssentials.SampleApp"
-        xmlns:wpfEssentials="clr-namespace:WpfEssentials;assembly=WpfEssentials"
+        xmlns:extensions="clr-namespace:WpfEssentials.Extensions;assembly=WpfEssentials"
         mc:Ignorable="d"
         d:DataContext="{d:DesignInstance local:MainViewModel}"
         Title="{Binding Title}" Height="450" Width="800">
@@ -19,7 +19,7 @@
         <TextBlock Text="{Binding SomeProperty}"/>
         <TextBox Text="{Binding SomeText}"/>
         <TextBlock Text="{Binding SomeInformation}"/>
-        <ComboBox ItemsSource="{wpfEssentials:EnumValues local:SomeEnum}" SelectedItem="{Binding EnumValue}">
+        <ComboBox ItemsSource="{extensions:EnumValues local:SomeEnum}" SelectedItem="{Binding EnumValue}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>

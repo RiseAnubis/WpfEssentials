@@ -60,7 +60,7 @@ public class MainViewModel : BaseDialogViewModel
 
     void OpenDirectoryExecute()
     {
-        if (ApplicationService.ShowFolderBrowserDialog("Open a Directory") == System.Windows.Forms.DialogResult.OK)
+        if (ApplicationService.ShowFolderBrowserDialog("Open a Directory"))
             ApplicationService.ShowMessage(DialogType.Information, "Folder", ApplicationService.FolderPath);
     }
 
