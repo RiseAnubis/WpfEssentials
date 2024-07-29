@@ -8,7 +8,7 @@ namespace WpfEssentials;
 /// </summary>
 public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
 {
-    readonly Dictionary<string, object> backingFields = new ();
+    readonly Dictionary<string, object> backingFields = [];
 
     /// <summary>
     /// The PropertyChanged event that is invoked every time a property has changed

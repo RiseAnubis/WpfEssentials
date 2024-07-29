@@ -3,8 +3,8 @@
 /// <inheritdoc />
 public class ApplicationService : IApplicationService
 {
-    readonly Dictionary<Type, Type> windowCollection = new ();
-    readonly List<Window> openWindows = new ();
+    readonly Dictionary<Type, Type> windowCollection = [];
+    readonly List<Window> openWindows = [];
 
     /// <inheritdoc />
     public string Filter { get; set; }
@@ -69,12 +69,12 @@ public class ApplicationService : IApplicationService
     /// <inheritdoc />
     public TViewModel OpenWindow<TViewModel>(Func<TViewModel> ViewModelCreator, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
     {
-        var (_, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
+        var (_, value) = windowCollection.First(x => x.Key == typeof(TViewModel));
+        var viewModel = ViewModelCreator();
 
         if (Activator.CreateInstance(value) is not Window window)
             throw new InvalidOperationException("The created object is not a Window");
 
-        var viewModel = ViewModelCreator();
         openWindows.Add(window);
         viewModel.ApplicationService = this;
         window.DataContext = viewModel;
@@ -118,7 +118,7 @@ public class ApplicationService : IApplicationService
         foreach (var window in windows)
             if (window != Application.Current.MainWindow)
                 openWindows.FirstOrDefault(x => x == window)?.Close();
-            
+
         if (openWindows.Count == 1)
             openWindows[0].Close();
         else
