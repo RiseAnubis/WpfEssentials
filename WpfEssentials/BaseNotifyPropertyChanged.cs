@@ -71,4 +71,10 @@ public abstract class BaseNotifyPropertyChanged : INotifyPropertyChanged
     /// <param name="OldValue">The old value of the property</param>
     /// <param name="NewValue">The new value of the property</param>
     protected virtual void OnPropertyChanged(string Property, object OldValue, object NewValue) => PropertyChanged?.Invoke(this, new PropertyChangedExtendedEventArgs(Property, OldValue, NewValue));
+
+    /// <summary>
+    /// Invokes the PropertyChanged event
+    /// </summary>
+    /// <param name="Property">The name of the property that has changed</param>
+    protected void OnPropertyChanged([CallerMemberName] string Property = null) => PropertyChanged?.Invoke(this, new(Property));
 }
