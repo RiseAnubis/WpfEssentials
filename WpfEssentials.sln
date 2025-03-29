@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34309.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfEssentials", "WpfEssentials\WpfEssentials.csproj", "{6357A8E1-DDDB-4F89-B700-E14C408C9CF9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfEssentials.SampleApp", "WpfEssentials.SampleApp\WpfEssentials.SampleApp.csproj", "{CD404A08-EB51-40CB-8FE7-34605C5EA63C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WpfEssentials.SampleApp", "WpfEssentials.SampleApp\WpfEssentials.SampleApp.csproj", "{CD404A08-EB51-40CB-8FE7-34605C5EA63C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

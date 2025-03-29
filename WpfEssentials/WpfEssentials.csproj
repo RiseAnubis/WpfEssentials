@@ -14,8 +14,10 @@
     <PackageTags>wpf mvvm</PackageTags>
     <PackageId>WpfBasic.WpfEssentials</PackageId>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <Version>1.4.3</Version>
+    <Version>1.4.4</Version>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <!-- If all members are not documented, you can disable the compiler warnings -->
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
   </PropertyGroup>
 
 </Project>
