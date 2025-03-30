@@ -60,7 +60,7 @@ jobs:
       #Test_Project_Path: your-test-project-path                 # Replace with the path to your test project, i.e. MyWpfApp.Tests\MyWpfApp.Tests.csproj.
       #Wap_Project_Directory: WpfEssentials.Package    # Replace with the Wap project directory relative to the solution, i.e. MyWpfApp.Package.
       #Wap_Project_Path: WpfEssentials.App.Package\WpfEssentials.Package.wapproj                   # Replace with the path to your Wap project, i.e. MyWpf.App.Package\MyWpfApp.Package.wapproj.
-      NuGetDirectory: ${{ github.workspace}}/nuget
+      NuGetDirectory: ${{ github.workspace}}\nuget
 
     steps:
     - name: Checkout
@@ -97,7 +97,7 @@ jobs:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+        path: ${{ env.NuGetDirectory }}\*.nupkg
 
   deploy:
     # Publish only when creating a GitHub Release
