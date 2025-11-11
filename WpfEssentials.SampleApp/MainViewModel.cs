@@ -44,12 +44,12 @@ public class MainViewModel : BaseDialogViewModel
 
     public MainViewModel()
     {
-        OpenParameterWindowCommand = new RelayCommand(OpenParameterWindowExecute);
-        OpenSecondWindowCommand = new RelayCommand(OpenSecondWindowExecute);
-        OpenDialogWindowCommand = new RelayCommand(OpenDialogWindowExecute);
-        OpenFileCommand = new RelayCommand(OpenFileExecute);
-        OpenDirectoryCommand = new RelayCommand(OpenDirectoryExecute);
-        CommandWithParameter = new RelayCommand<string>(CommandWithParameterExecute);
+        OpenParameterWindowCommand = new(OpenParameterWindowExecute);
+        OpenSecondWindowCommand    = new(OpenSecondWindowExecute);
+        OpenDialogWindowCommand    = new(OpenDialogWindowExecute);
+        OpenFileCommand            = new(OpenFileExecute);
+        OpenDirectoryCommand       = new(OpenDirectoryExecute);
+        CommandWithParameter       = new RelayCommand<string>(CommandWithParameterExecute);
         SomeProperty = "Initial value";
     }
 

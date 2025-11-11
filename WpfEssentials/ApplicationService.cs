@@ -134,26 +134,14 @@ public class ApplicationService : IApplicationService
     /// <inheritdoc />
     public MessageBoxResult ShowMessage(DialogType Type, string Caption, string Message)
     {
-        var buttons = MessageBoxButton.OK;
-        var icon = MessageBoxImage.None;
-
-        switch (Type)
+        var (buttons, icon) = Type switch
         {
-            case DialogType.Error:
-                icon = MessageBoxImage.Error;
-                break;
-            case DialogType.Information:
-                icon = MessageBoxImage.Information;
-                break;
-            case DialogType.Question:
-                buttons = MessageBoxButton.YesNoCancel;
-                icon = MessageBoxImage.Question;
-                break;
-            case DialogType.Warning:
-                buttons = MessageBoxButton.OKCancel;
-                icon = MessageBoxImage.Warning;
-                break;
-        }
+            DialogType.Error => (MessageBoxButton.OK, MessageBoxImage.Error),
+            DialogType.Information => (MessageBoxButton.OK, MessageBoxImage.Information),
+            DialogType.Question => (MessageBoxButton.YesNoCancel, MessageBoxImage.Question),
+            DialogType.Warning => (MessageBoxButton.OKCancel, MessageBoxImage.Warning),
+            _ => (MessageBoxButton.OK, MessageBoxImage.None)
+        };
 
         return MessageBox.Show(Application.Current.MainWindow, Message, Caption, buttons, icon);
     }
