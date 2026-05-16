@@ -15,6 +15,6 @@ public static class FrameworkElementExtensions
     {
         var method = Object.GetType().GetMethod("GetTemplateChild", BindingFlags.NonPublic | BindingFlags.Instance) ?? throw new InvalidOperationException("Method 'GetTemplateChild' not found");
 
-        return (T)method.Invoke(Object, new object[] { ElementName });
+        return (T)method.Invoke(Object, [ElementName]);
     }
 }
