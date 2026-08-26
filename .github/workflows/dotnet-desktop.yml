@@ -47,6 +47,9 @@ on:
 jobs:
 
   build:
+      permissions:
+      id-token: write  # enable GitHub OIDC token issuance for this job
+      contents: read
 
     strategy:
       matrix:
@@ -90,6 +93,14 @@ jobs:
     
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     - run: dotnet pack WpfEssentials\WpfEssentials.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+
+    
+    # Get a short-lived NuGet API key
+    - name: NuGet login (OIDC → temp API key) 
+      uses: NuGet/login@v1        
+      id: login
+      with:
+          user: ${{ secrets.NUGET_USER }}
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     #- uses: actions/upload-pages-artifact@v3
