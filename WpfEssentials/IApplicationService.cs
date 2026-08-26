@@ -6,6 +6,13 @@
 public interface IApplicationService
 {
     /// <summary>
+    /// Registers a window with a corresponding viewmodel to be used from the service
+    /// </summary>
+    /// <typeparam name="TViewModel">The viewmodel of the window that should be opened</typeparam>
+    /// <typeparam name="TWindow">The corresponding window of the viewmodel</typeparam>
+    IApplicationService Register<TViewModel, TWindow>() where TViewModel : BaseDialogViewModel where TWindow : Window;
+
+    /// <summary>
     /// A filter for file dialogs
     /// </summary>
     string Filter { get; set; }
