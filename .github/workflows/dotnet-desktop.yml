@@ -47,7 +47,7 @@ on:
 jobs:
 
   build:
-      permissions:
+    permissions:
       id-token: write  # enable GitHub OIDC token issuance for this job
       contents: read
 
