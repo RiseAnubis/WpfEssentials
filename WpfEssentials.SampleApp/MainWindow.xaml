@@ -2,29 +2,43 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WpfEssentials.SampleApp"
         xmlns:extensions="clr-namespace:WpfEssentials.Extensions;assembly=WpfEssentials"
-        mc:Ignorable="d"
+        xmlns:local="clr-namespace:WpfEssentials.SampleApp"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        Title="{Binding Title}"
+        Width="800"
+        Height="450"
         d:DataContext="{d:DesignInstance local:MainViewModel}"
-        Title="{Binding Title}" Height="450" Width="800">
+        mc:Ignorable="d">
     <StackPanel>
-        <Button Content="Open window with constructor parameters" Command="{Binding OpenParameterWindowCommand}"/>
-        <Button Content="Open second window" Command="{Binding OpenSecondWindowCommand}"/>
-        <Button Content="Open dialog window" Command="{Binding OpenDialogWindowCommand}"/>
-        <Button Content="Command with parameter" Command="{Binding CommandWithParameter}" CommandParameter="The Parameter"/>
-        <Button Content="Open a file" Command="{Binding OpenFileCommand}"/>
-        <Button Content="Open a folder browser" Command="{Binding OpenDirectoryCommand}" local:AttachedProperties.AttachedTooltip="Tooltip for attached property"/>
-        <local:MyTestControl x:Name="testControl"/>
-        <TextBlock Text="{Binding SomeProperty}"/>
-        <TextBox Text="{Binding SomeText}"/>
-        <TextBlock Text="{Binding SomeInformation}"/>
-        <ComboBox ItemsSource="{extensions:EnumValues local:SomeEnum}" SelectedItem="{Binding EnumValue}">
+        <Button Command="{Binding OpenParameterWindowCommand}"
+                Content="Open window with constructor parameters" />
+        <Button Command="{Binding OpenSecondWindowCommand}"
+                Content="Open second window" />
+        <Button Command="{Binding OpenDialogWindowCommand}"
+                Content="Open dialog window" />
+        <Button Command="{Binding CommandWithParameter}"
+                CommandParameter="The Parameter"
+                Content="Command with parameter" />
+        <Button Command="{Binding OpenFileCommand}"
+                Content="Open a file" />
+        <Button local:AttachedProperties.AttachedTooltip="Tooltip for attached property"
+                Command="{Binding OpenDirectoryCommand}"
+                Content="Open a folder browser" />
+        <local:MyTestControl x:Name="testControl" />
+        <TextBlock Text="{Binding SomeProperty}" />
+        <TextBox Text="{Binding SomeText}" />
+        <TextBlock Text="{Binding SomeInformation}" />
+        <ComboBox ItemsSource="{extensions:EnumValues local:SomeEnum}"
+                  SelectedItem="{Binding EnumValue}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
-                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}" />
                 </DataTemplate>
             </ComboBox.ItemTemplate>
         </ComboBox>
+        <Button Command="{Binding AddTestViewCommand}"
+                Content="Add TestView" />
+        <ContentPresenter Content="{Binding TestView}" />
     </StackPanel>
 </Window>

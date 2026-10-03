@@ -13,6 +13,13 @@ public interface IApplicationService
     IApplicationService Register<TViewModel, TWindow>() where TViewModel : BaseDialogViewModel where TWindow : Window;
 
     /// <summary>
+    /// Registers a view with a corresponding viewmodel to be used from the service. The view will be added as a application resource so it does not have to be defined in the App.Xaml.
+    /// </summary>
+    /// <typeparam name="TViewModel">The viewmodel of the window that should be opened</typeparam>
+    /// <typeparam name="TView">The corresponding view of the viewmodel</typeparam>
+    IApplicationService RegisterView<TViewModel, TView>() where TViewModel : BaseDialogViewModel where TView : UserControl;
+
+    /// <summary>
     /// A filter for file dialogs
     /// </summary>
     string Filter { get; set; }

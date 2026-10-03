@@ -32,6 +32,19 @@ public class ApplicationService : IApplicationService
     }
 
     /// <inheritdoc />
+    public IApplicationService RegisterView<TViewModel, TView>()
+        where TViewModel : BaseDialogViewModel
+        where TView : UserControl
+    {
+        var factory = new FrameworkElementFactory(typeof(TView));
+        var template = new DataTemplate { VisualTree = factory, DataType = typeof(TViewModel) };
+
+        Application.Current.Resources.Add(template.DataTemplateKey, template);
+
+        return this;
+    }
+
+    /// <inheritdoc />
     public TViewModel OpenWindow<TViewModel>(Action<TViewModel> ViewModelInitializer = null, bool IsDialog = false, Action<TViewModel> AfterLoadedAction = null) where TViewModel : BaseDialogViewModel
     {
         var (key, value) = windowCollection.First(x => typeof(TViewModel) == x.Key);
@@ -147,6 +160,7 @@ public class ApplicationService : IApplicationService
     {
         var sfd = new SaveFileDialog { Filter = Filter };
         var result = sfd.ShowDialog(Application.Current.MainWindow).Value;
+
         FileName = sfd.FileName;
         SafeFileName = sfd.SafeFileName;
 
@@ -158,6 +172,7 @@ public class ApplicationService : IApplicationService
     {
         var ofd = new OpenFileDialog { Filter = Filter };
         var result = ofd.ShowDialog(Application.Current.MainWindow).Value;
+
         FileName = ofd.FileName;
         SafeFileName = ofd.SafeFileName;
 
@@ -167,12 +182,9 @@ public class ApplicationService : IApplicationService
     /// <inheritdoc />
     public bool ShowFolderBrowserDialog(string Description)
     {
-        var ofd = new OpenFolderDialog()
-        {
-            Title = Description,
-        };
-
+        var ofd = new OpenFolderDialog() { Title = Description, };
         var result = ofd.ShowDialog(Application.Current.MainWindow).Value;
+
         FolderPath = ofd.FolderName;
 
         return result;

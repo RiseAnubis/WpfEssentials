@@ -3,17 +3,19 @@
 namespace WpfEssentials.SampleApp;
 
 public class MainViewModel : BaseDialogViewModel
-{ 
+{
     public RelayCommand OpenParameterWindowCommand { get; }
-        
+
     public RelayCommand OpenSecondWindowCommand { get; }
-        
+
     public RelayCommand OpenDialogWindowCommand { get; }
-        
+
     public RelayCommand OpenFileCommand { get; }
-        
+
     public RelayCommand OpenDirectoryCommand { get; }
-        
+
+    public RelayCommand AddTestViewCommand { get; }
+
     public RelayCommand<string> CommandWithParameter { get; }
 
     public string SomeProperty
@@ -40,16 +42,23 @@ public class MainViewModel : BaseDialogViewModel
         set => SetProperty(value);
     }
 
+    public object TestView
+    {
+        get => GetProperty<object>();
+        set => SetProperty(value);
+    }
+
     public override string Title => "WPF Essentials Demo Application";
 
     public MainViewModel()
     {
         OpenParameterWindowCommand = new(OpenParameterWindowExecute);
-        OpenSecondWindowCommand    = new(OpenSecondWindowExecute);
-        OpenDialogWindowCommand    = new(OpenDialogWindowExecute);
-        OpenFileCommand            = new(OpenFileExecute);
-        OpenDirectoryCommand       = new(OpenDirectoryExecute);
-        CommandWithParameter       = new RelayCommand<string>(CommandWithParameterExecute);
+        OpenSecondWindowCommand = new(OpenSecondWindowExecute);
+        OpenDialogWindowCommand = new(OpenDialogWindowExecute);
+        OpenFileCommand = new(OpenFileExecute);
+        OpenDirectoryCommand = new(OpenDirectoryExecute);
+        AddTestViewCommand = new(AddTestViewExecute);
+        CommandWithParameter = new RelayCommand<string>(CommandWithParameterExecute);
         SomeProperty = "Initial value";
     }
 
@@ -89,6 +98,11 @@ public class MainViewModel : BaseDialogViewModel
     void OpenSecondWindowExecute()
     {
         ApplicationService.OpenWindow<SecondWindowViewModel>();
+    }
+
+    void AddTestViewExecute()
+    {
+        TestView = new TestViewModel();
     }
 
     protected override void OnPropertyChanged(string Property, object OldValue, object NewValue)
